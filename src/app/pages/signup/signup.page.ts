@@ -47,12 +47,12 @@ export class SignupPage implements OnInit {
     this._authService
       .setUserData(result.user, this.userRegistration.value)
       .then((res: any) => {
-        this._utilsService.hideLoading();
         localStorage.setItem(Constants.USERNAME, this.userRegistration.value.name)
         localStorage.setItem(Constants.USER_ROLE, "1")
         this._authService.authenticationState.next(true);
         this._authService.adminAuthenticationState.next(false);
         this.userRegistration.reset();
+        this._utilsService.hideLoading();
         this._router.navigateByUrl('/home', { replaceUrl: true });
       }).catch((ex) => {
         this._utilsService.hideLoading();
