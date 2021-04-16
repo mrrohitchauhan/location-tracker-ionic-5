@@ -24,7 +24,7 @@ export class HomePage {
   map: any;
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
   isAdmin: boolean = false;
-  
+
   constructor(private _locationRequest: LocationService, private _commonService: CommonService, private _utilsService: CommonUtilsService,
     private _authService: AuthenticationService, private _ngZone: NgZone, private _geolocation: Geolocation) { }
 
@@ -86,6 +86,7 @@ export class HomePage {
   }
 
   getUsers() {
+    this._utilsService.showLoading();
     this._commonService.getAllUsers()
       .subscribe((res: any) => {
         this.users = [];
@@ -93,6 +94,7 @@ export class HomePage {
         users.forEach((e) => {
           this.users.push(e.payload.doc.data());
         })
+      this._utilsService.hideLoading();
       });
   }
 
