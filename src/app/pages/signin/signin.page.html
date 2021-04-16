@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign In</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding='true'>
+  <div class="container py-3">
+    <form [formGroup]="userLogin">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="text" class="form-control" placeholder="Enter email" name="email" formControlName="email">
+        <small class="form-text text-muted" *ngIf="signinFormControl.email.errors?.email">Email must be a valid email
+          address</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password"
+          name="password" formControlName="password">
+        <small class="form-text text-muted" *ngIf="signinFormControl.password.errors?.minlength">Password must be at
+          least
+          6 characters</small>
+      </div>
+      <div class="form-group">
+        <a routerLink='/signup'>Create Account</a>
+      </div>
+      <ion-button expand="block" share="round" color="primary" (click)="signIn()" [disabled]="!userLogin.valid">Signin
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

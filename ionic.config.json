@@ -1,0 +1,7 @@
+{
+  "name": "TrackerPOC",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
