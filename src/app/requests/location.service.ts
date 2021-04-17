@@ -15,11 +15,11 @@ export class LocationService {
   public locationSubject = new Subject<any>();
   public requestBehaviourSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private androidPermissions: AndroidPermissions, private locationAccuracy: LocationAccuracy, private _geolocation: Geolocation) {
+  constructor(private _androidPermissions: AndroidPermissions, private _locationAccuracy: LocationAccuracy, private _geolocation: Geolocation) {
   }
 
   checkGPSPermission() {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+    this._androidPermissions.checkPermission(this._androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
       result => {
         if (result.hasPermission) {
 
@@ -38,12 +38,12 @@ export class LocationService {
     );
   }
   requestGPSPermission() {
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+    this._locationAccuracy.canRequest().then((canRequest: boolean) => {
       if (canRequest) {
         console.log("4");
       } else {
         //Show 'GPS Permission Request' dialogue
-        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+        this._androidPermissions.requestPermission(this._androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
           .then(
             () => {
               // call method to turn on GPS
@@ -59,7 +59,7 @@ export class LocationService {
     });
   }
   askToTurnOnGPS() {
-    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+    this._locationAccuracy.request(this._locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
       () => {
         this.getCurrentCordinates();
         // When GPS Turned ON call method to get Accurate location coordinates
@@ -71,7 +71,7 @@ export class LocationService {
     );
   }
   getCurrentCordinates() {
-    this._geolocation.getCurrentPosition({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
+    this._geolocation.getCurrentPosition().then((resp) => {
       let latlng = {
         latitude: resp.coords.latitude,
         longitute: resp.coords.longitude
